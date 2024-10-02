@@ -18,5 +18,10 @@ public class GameManagerScript : MonoBehaviour
         {
             SceneManager.LoadScene("Title Scene");
         }
+
+        if(Enemy.Hp <= 0)
+        {
+            SceneManager.LoadScene("Title Scene");
+        }
     }
 }

@@ -4,6 +4,7 @@ using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Assertions.Comparers;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -39,7 +40,11 @@ public class PlayerScript : MonoBehaviour
 
     int bulletTimer = 0;
 
+    // HP関係
     static public int Hp = 100;
+    // 敵のHPバー
+    public Slider EnemySlider;
+    static public Slider SpeedSlider;
 
     public GameObject bullet;
 
@@ -81,6 +86,8 @@ public class PlayerScript : MonoBehaviour
         {
             m_weaponNo = 0;
         }
+        isFreezeRot = false;
+        isAtk = false;
         m_charcterEquipmentManager.EquipWeapon(m_weaponsPath[m_weaponNo]);
     }
 
@@ -91,6 +98,8 @@ public class PlayerScript : MonoBehaviour
         {
             m_weaponNo = (int)WeaponTypes.NUM - 1;
         }
+        isFreezeRot = false;
+        isAtk = false;
         m_charcterEquipmentManager.EquipWeapon(m_weaponsPath[m_weaponNo]);
     }
 
@@ -101,6 +110,8 @@ public class PlayerScript : MonoBehaviour
         m_charcterEquipmentManager.EquipWeapon(m_weaponsPath[(int)WeaponTypes.SWORD]);
         ShotPoint = transform.GetChild(0).gameObject;
         Hp = 100;
+        EnemySlider.value = 1000;
+        SpeedSlider = EnemySlider;
     }
 
     void FixedUpdate()
@@ -215,6 +226,7 @@ public class PlayerScript : MonoBehaviour
 
                         // 発射したらタイマーを1にする
                         bulletTimer = 1;
+                        isAtk = false;
                     }
 
                 }
@@ -241,6 +253,7 @@ public class PlayerScript : MonoBehaviour
             if (isAtk)
             {
                 Enemy.Hp -= 10;
+                EnemySlider.value = (float)Enemy.Hp;
                 Enemy.EnemyAnimator.SetBool("isHit", true);
             }
         }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class Enemy : MonoBehaviour
     private GameObject goal; 　//②←目的地になるオブジェクトを取得するための変数
 
     static public Animator EnemyAnimator;
-
+    //敵のHP
     public static int Hp = 1000;
+    //自機のHPバー
+    public Slider slider;
 
     int Count = 0;
 
@@ -33,6 +36,8 @@ public class Enemy : MonoBehaviour
         goal = GameObject.Find("Player");　//②ここで目的地を取得
         transform.position = new Vector3(0, 0, 8);
         EnemyAnimator = GetComponent<Animator>();
+        Hp = 1000;
+        slider.value = 100;
     }
 
     // Update is called once per frame
@@ -49,7 +54,7 @@ public class Enemy : MonoBehaviour
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 new Vector3(goal.transform.position.x, 0, goal.transform.position.z),
-                8f * Time.deltaTime);
+                5f * Time.deltaTime);
 
             transform.LookAt(goal.transform);
 
@@ -104,7 +109,7 @@ public class Enemy : MonoBehaviour
 
                 PlayerScript.isInvincible = true;
                 PlayerScript.Hp -= 20;
-                
+                slider.value = (float)PlayerScript.Hp;
             }
         }
     }
