@@ -14,14 +14,22 @@ public class GameManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // プレイヤーのHPが0になったとき
         if (PlayerScript.Hp <= 0)
         {
+            // タイトルシーンに遷移
             SceneManager.LoadScene("Title Scene");
+            // ステージチェンジフラグをONにする
+            TitleSlime.isStageChange = true;
         }
 
-        if(Enemy.Hp <= 0)
+        // 敵のHPが0になったとき
+        if (Enemy.Hp <= 0)
         {
+            // タイトルシーンに遷移
             SceneManager.LoadScene("Title Scene");
+            // ステージチェンジフラグをONにする
+            TitleSlime.isStageChange = true;
         }
     }
 }

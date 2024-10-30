@@ -9,6 +9,7 @@ public class BulletScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 5秒後にオブジェクトを消す
         Destroy(gameObject, 5);
     }
 
@@ -20,11 +21,16 @@ public class BulletScript : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+        // 敵に当たったとき
         if (other.gameObject.tag == "Enemy")
         {
+            // 敵のHPを減らす
             Enemy.Hp -= 5;
+            // 敵のHPバーを減らす
             PlayerScript.SpeedSlider.value = (float)Enemy.Hp;
+            // 敵の被弾アニメーションをONにする
             Enemy.EnemyAnimator.SetBool("isHit", true);
+            // このオブジェクトを消す
             Destroy(this.gameObject);
         }
         else
